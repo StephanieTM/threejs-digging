@@ -12,7 +12,11 @@ export default function Homepage(): JSX.Element {
       {contentSwitch ? (
         <div>Congrats 🎉</div>
       ) : (
-        <div>Hello World!</div>
+        <div>
+          {new Array(1000).fill(0).map((_i, key) => (
+            <div key={key}>Hello World!</div>
+          ))}
+        </div>
       )}
     </div>
   );
