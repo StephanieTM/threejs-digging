@@ -10,13 +10,11 @@ export default function Background(): JSX.Element {
   const renderer = useRef<THREE.WebGLRenderer>();
 
   const geometry = useRef(new THREE.TorusGeometry(10, 3, 16, 100));
-  const material = useRef(new THREE.MeshStandardMaterial({ color: 0xff6374 }));
+  const material = useRef(new THREE.MeshStandardMaterial({ color: 0xf799d5 }));
   const torus = useRef(new THREE.Mesh(geometry.current, material.current));
 
   const pointLight = useRef(new THREE.PointLight(0xffffff));
   const ambientLight = useRef(new THREE.AmbientLight(0xffffff));
-  const lightHelper = useRef(new THREE.PointLightHelper(pointLight.current));
-  const gridHelper = useRef(new THREE.GridHelper(200, 50));
   const controls = useRef<OrbitControls>();
 
   const spaceTexture = useRef(new THREE.TextureLoader().load(bgTextureMap.space));
@@ -47,9 +45,9 @@ export default function Background(): JSX.Element {
     moon.current.rotation.y += 0.075;
     moon.current.rotation.z += 0.05;
 
-    camera.current.position.x = t * -0.0002;
-    camera.current.position.y = t * -0.0002;
-    camera.current.position.z = t * -0.01;
+    camera.current.position.x = (t - 3000) * -0.0002;
+    camera.current.position.y = (t - 3000) * -0.0002;
+    camera.current.position.z = (t - 3000) * -0.01;
   }, []);
 
   const init = useCallback(() => {
@@ -58,18 +56,20 @@ export default function Background(): JSX.Element {
     });
     renderer.current.setPixelRatio(window.devicePixelRatio);
     renderer.current.setSize(window.innerWidth, window.innerHeight);
-    camera.current.position.setZ(30);
+    camera.current.position.set(0.6, 0.6, 30);
     pointLight.current.position.set(20, 20, 20);
     controls.current = new OrbitControls(camera.current, renderer.current.domElement)
 
+    moon.current.position.z = 30;
+    moon.current.position.x = -10;
 
+    torus.current.position.x = 20;
+    torus.current.position.y = 10;
+    torus.current.position.z = -10;
 
     scene.current.add(torus.current);
     scene.current.add(pointLight.current, ambientLight.current);
-    scene.current.add(lightHelper.current, gridHelper.current);
     scene.current.add(moon.current);
-    moon.current.position.z = 30;
-    moon.current.position.x = -10;
     scene.current.background = spaceTexture.current;
 
     Array(200).fill(0).forEach(() => addStars());
