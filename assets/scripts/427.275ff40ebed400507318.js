@@ -1,0 +1,1 @@
+(self.webpackChunkthreejs_digging=self.webpackChunkthreejs_digging||[]).push([[427],{4427:function(e,n,t){"use strict";t.r(n),t.d(n,{default:function(){return u}});var r=t(7294);function u(){return r.createElement("div",null,"Projects")}}}]);
